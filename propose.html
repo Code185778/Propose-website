@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For You, My Crush</title>
+    <style>
+        body {
+            background: linear-gradient(rgba(255, 192, 203, 0.7), rgba(255, 182, 193, 0.7)), 
+                        url('https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        h1 {
+            color: #ff3366;
+            font-size: 50px;
+            animation: fadeIn 2s;
+        }
+        p {
+            color: #ffffff;
+            font-size: 24px;
+            margin-top: 20px;
+            animation: fadeIn 2.5s;
+        }
+        .heart {
+            font-size: 100px;
+            color: #ff4d4d;
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .controls {
+            margin-top: 40px;
+        }
+        button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff6699;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff3366;
+        }
+        iframe {
+            display: none;
+        }
+        /* Falling hearts */
+        .falling-heart {
+            position: absolute;
+            top: -10px;
+            font-size: 20px;
+            color: #ff4d4d;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YouTube Music Hidden -->
+    <iframe id="ytplayer" type="text/html" width="0" height="0"
+      src="https://www.youtube.com/embed/5HZ9qeFjhYk?enablejsapi=1&loop=1&playlist=5HZ9qeFjhYk"
+      frameborder="0" allow="autoplay"></iframe>
+
+    <div class="heart">❤️</div>
+    <h1>Hey Crush!</h1>
+    <p>I love you so much!</p>
+    <p>Would you be mine?</p>
+
+    <div class="controls">
+        <button onclick="playMusic()">Play Music</button>
+        <button onclick="pauseMusic()">Pause Music</button>
+    </div>
+
+    <script>
+        // YouTube API Control
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        let firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytplayer');
+        }
+
+        function playMusic() {
+            if (player) {
+                player.playVideo();
+            }
+        }
+
+        function pauseMusic() {
+            if (player) {
+                player.pauseVideo();
+            }
+        }
+
+        // Falling hearts effect
+        setInterval(function() {
+            const heart = document.createElement('div');
+            heart.className = 'falling-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 300);
+
+        // Sweet popup when page loads
+        window.onload = function() {
+            setTimeout(function(){
+                alert("Hey Crush! I made this just for you... I love you!");
+            }, 1500);
+        }
+    </script>
+
+</body>
